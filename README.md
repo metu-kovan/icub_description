@@ -14,6 +14,7 @@
 ### Run
 1. `roscore`
 2. `yarp server --ros`
-3. `cd /src/icub_description/yarp_ros_bridge/build`
-4. run `./icub_state_publisher`
-5. `roslaunch icub_description icub.launch`
+3. `iCub_SIM`
+4. `cd /src/icub_description/yarp_ros_bridge/build`
+5. run `./icub_state_publisher`
+6. `roslaunch icub_description icub.launch`
