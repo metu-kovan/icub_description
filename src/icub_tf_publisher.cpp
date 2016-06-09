@@ -13,15 +13,19 @@ int main(int argc, char** argv)
   tf::TransformBroadcaster tf_broadcaster;
   tf::Transform icub_tf;
   static tf::TransformBroadcaster br;
-
-  ros::Duration sleeper(75.0/1000.0);
+  ros::Rate loop_rate(60);
+  // ros::Duration sleeper(75.0/1000.0);
 
   while( ros::ok() )
     {
       icub_tf.setRotation(tf::Quaternion(tf::Vector3(1.0, 0.0, 0.0), 0));
       icub_tf.setOrigin(tf::Vector3(0, 0, 0.60));
       br.sendTransform(tf::StampedTransform(icub_tf, ros::Time::now(), "world", "base_link"));
-      sleeper.sleep();
+      // sleeper.sleep();
+
+      ros::spinOnce();
+
+      loop_rate.sleep();
     }
 
   return 0;
