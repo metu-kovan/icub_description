@@ -1,7 +1,6 @@
 # icub_description
 
-This package includes a urdf model of iCub humanoid robot and a yarp-ros bridge to publish
-joint states of the robot to ros. 
+This package consists of a urdf model of iCub humanoid robot and a yarp-ros bridge to publish joint states of the robot to ros.
 
 ### Requirements
 
