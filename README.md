@@ -1,5 +1,14 @@
 # icub_description
 
+This package includes a urdf model of iCub humanoid robot and a yarp-ros bridge to publish
+joint states of the robot to ros. 
+
+### Requirements
+
+1. ROS : http://wiki.ros.org/
+2. Yarp : http://www.yarp.it/
+3. iCub : http://wiki.icub.org/
+
 ### Install
 
 1. `cd ~/catkin_ws/src`  
