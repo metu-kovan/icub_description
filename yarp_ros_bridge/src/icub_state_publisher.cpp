@@ -8,8 +8,8 @@
 #include <yarp/sig/Vector.h>
 
 #include "../include/sensor_msgs_JointState.h"
-
 #include <string>
+#include <time.h>
 
 using namespace yarp::dev;
 using namespace yarp::sig;
@@ -20,6 +20,19 @@ int main(int argc, char const *argv[]) {
     Network yarp;
 
     Node node("/icub_sim/state_publisher");
+
+
+    Property options_head;
+    options_head.put("device", "remote_controlboard");
+    options_head.put("local", "/head/client");   //local port names
+    options_head.put("remote", "/icubSim/head");
+    // create a device
+    PolyDriver headDevice(options_head);
+    if (!headDevice.isValid()) {
+        printf("Device not available.  Here are the known devices:\n");
+        printf("%s", Drivers::factory().toString().c_str());
+        return 0;
+    }
 
     Property options_torso;
     options_torso.put("device", "remote_controlboard");
@@ -58,11 +71,13 @@ int main(int argc, char const *argv[]) {
         return 0;
     }
 
+    IPositionControl *posHead;
     IPositionControl *posTorso;
-    IEncoders *encsTorso;
     IPositionControl *posRArm;
-    IEncoders *encsRArm;
     IPositionControl *posLArm;
+    IEncoders *encsHead;
+    IEncoders *encsTorso;
+    IEncoders *encsRArm;
     IEncoders *encsLArm;
 
     torsoDevice.view(posTorso);
@@ -71,30 +86,38 @@ int main(int argc, char const *argv[]) {
     rArmDevice.view(encsRArm);
     lArmDevice.view(posLArm);
     lArmDevice.view(encsLArm);
+    headDevice.view(posHead);
+    headDevice.view(encsHead);
 
 
-    int nj=0;
+    int nj = 0;
+
+    posHead->getAxes(&nj);
+    Vector encodersHead;
+    encodersHead.resize(nj);
+
+    nj = 0;
     posTorso->getAxes(&nj);
     Vector encodersTorso;
     encodersTorso.resize(nj);
 
-    nj=0;
+    nj = 0;
     posRArm->getAxes(&nj);
     Vector encodersRArm;
     encodersRArm.resize(nj);
 
-    nj=0;
+    nj = 0;
     posLArm->getAxes(&nj);
     Vector encodersLArm;
     encodersLArm.resize(nj);
 
 
-
-    while(!encsTorso->getEncoders(encodersTorso.data()))
-    {
-        Time::delay(1);
-        printf(".");
-    }
+    //
+    // while(!encsTorso->getEncoders(encodersTorso.data()))
+    // {
+    //     Time::delay(1);
+    //     printf(".");
+    // }
 
     yarp::os::Publisher<sensor_msgs_JointState> joint_pub;
     if (!joint_pub.topic("/joint_states")) {
@@ -104,27 +127,19 @@ int main(int argc, char const *argv[]) {
 
     float degtorad = 0.0174532925;
 
-    encsTorso->getEncoders(encodersTorso.data());
-    encsRArm->getEncoders(encodersRArm.data());
-    encsLArm->getEncoders(encodersLArm.data());
-
-
     sensor_msgs_JointState joint_states;
+    struct timespec currentTime;
 
-    joint_states.header.stamp.sec = Time::now();
     joint_states.name.resize(70);
     joint_states.position.resize(70);
     joint_states.velocity.resize(70);
 
     joint_states.name[0] ="j1";
-    joint_states.position[0] = encodersTorso[2] * degtorad;
-    joint_states.velocity[0] = 10;
+    joint_states.position[0] = 0.0;
     joint_states.name[1] ="j2";
-    joint_states.position[1] = encodersTorso[1] * degtorad;
-    joint_states.velocity[1] = 10;
+    joint_states.position[1] = 0.0;
     joint_states.name[2] ="j3";
-    joint_states.position[2] = encodersTorso[0] * degtorad;
-    joint_states.velocity[2] = 10;
+    joint_states.position[2] = 0.0;
     joint_states.name[3] ="j4";
     joint_states.position[3] = 0.0;
     joint_states.name[4] ="j5";
@@ -140,41 +155,29 @@ int main(int argc, char const *argv[]) {
     joint_states.name[9] ="j8s";
     joint_states.position[9] = 0.0;
     joint_states.name[10] ="raj1";
-    joint_states.position[10] = encodersRArm[0] * degtorad;
-    joint_states.velocity[10] = 10;
+    joint_states.position[10] = 0.0;
     joint_states.name[11] ="raj2";
-    joint_states.position[11] = encodersRArm[1] * degtorad;
-    joint_states.velocity[11] = 10;
+    joint_states.position[11] = 0.0;
     joint_states.name[12] ="raj3";
-    joint_states.position[12] = encodersRArm[2] * degtorad;
-    joint_states.velocity[12] = 10;
+    joint_states.position[12] = 0.0;
     joint_states.name[13] ="raj4";
-    joint_states.position[13] = encodersRArm[3] * degtorad;
-    joint_states.velocity[13] = 10;
+    joint_states.position[13] = 0.0;
     joint_states.name[14] ="raj5";
-    joint_states.position[14] = encodersRArm[4] * degtorad;
-    joint_states.velocity[14] = 10;
+    joint_states.position[14] = 0.0;
     joint_states.name[15] ="raj6";
-    joint_states.position[15] = encodersRArm[5] * degtorad;
-    joint_states.velocity[15] = 10;
+    joint_states.position[15] = 0.0;
     joint_states.name[16] ="laj1";
-    joint_states.position[16] = encodersLArm[0] * degtorad;
-    joint_states.velocity[16] = 10;
+    joint_states.position[16] = 0.0;
     joint_states.name[17] ="laj2";
-    joint_states.position[17] = encodersLArm[1] * degtorad;
-    joint_states.velocity[17] = 10;
+    joint_states.position[17] = 0.0;
     joint_states.name[18] ="laj3";
-    joint_states.position[18] = encodersLArm[2] * degtorad;
-    joint_states.velocity[18] = 10;
+    joint_states.position[18] = 0.0;
     joint_states.name[19] ="laj4";
-    joint_states.position[19] = encodersLArm[3] * degtorad;
-    joint_states.velocity[20] = 10;
+    joint_states.position[19] = 0.0;
     joint_states.name[20] ="laj5";
-    joint_states.position[20] = encodersLArm[4] * degtorad;
-    joint_states.velocity[20] = 10;
+    joint_states.position[20] = 0.0;
     joint_states.name[21] ="laj6";
-    joint_states.position[21] = encodersLArm[5] * degtorad;
-    joint_states.velocity[21] = 10;
+    joint_states.position[21] = 0.0;
     joint_states.name[22] ="rlaj1";
     joint_states.position[22] = 0.0;
     joint_states.name[23] ="rlaj2";
@@ -200,7 +203,7 @@ int main(int argc, char const *argv[]) {
     joint_states.name[33] ="llaj6";
     joint_states.position[33] = 0.0;
     joint_states.name[34] ="right_wrist_yaw";
-    joint_states.position[34] = encodersRArm[6] * degtorad;
+    joint_states.position[34] = 0.0;
     joint_states.name[35] ="tj2";
     joint_states.position[35] = 0.0;
     joint_states.name[36] ="tj4";
@@ -238,7 +241,7 @@ int main(int argc, char const *argv[]) {
     joint_states.name[52] ="lij5";
     joint_states.position[52] = 0.0;
     joint_states.name[53] ="left_wrist_yaw";
-    joint_states.position[53] = encodersLArm[6] * degtorad;
+    joint_states.position[53] = 0.0;
     joint_states.name[54] ="ltj2";
     joint_states.position[54] = 0.0;
     joint_states.name[55] ="ltj4";
@@ -279,14 +282,20 @@ int main(int argc, char const *argv[]) {
       encsTorso->getEncoders(encodersTorso.data());
       encsRArm->getEncoders(encodersRArm.data());
       encsLArm->getEncoders(encodersLArm.data());
+      encsHead->getEncoders(encodersHead.data());
 
-      Time::delay(0.02);
 
-      joint_states.header.stamp.sec = Time::now();
+      clock_gettime(CLOCK_REALTIME, &currentTime);
+      // std::cout << currentTime.tv_nsec << std::endl;
+      joint_states.header.stamp.sec = currentTime.tv_sec;
+      joint_states.header.stamp.nsec = currentTime.tv_nsec;
 
       joint_states.position[0] = encodersTorso[2] * degtorad;
       joint_states.position[1] = encodersTorso[1] * degtorad;
       joint_states.position[2] = encodersTorso[0] * degtorad;
+      joint_states.position[3] = encodersHead[0] * degtorad;
+      joint_states.position[4] = encodersHead[1] * degtorad;
+      joint_states.position[5] = encodersHead[2] * degtorad;
       joint_states.position[10] = encodersRArm[0] * degtorad;
       joint_states.position[11] = encodersRArm[1] * degtorad;
       joint_states.position[12] = encodersRArm[2] * degtorad;
@@ -304,7 +313,7 @@ int main(int argc, char const *argv[]) {
 
 
 
-      // Time::delay(0.01);
+      Time::delay(0.01);
     }
 
     // joint_pub.close();
