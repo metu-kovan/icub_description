@@ -17,8 +17,8 @@ using namespace yarp::os;
 
 
 int main(int argc, char const *argv[]) {
-    Network yarp;
 
+    Network yarp;
     Node node("/icub_sim/state_publisher");
 
 
@@ -112,12 +112,6 @@ int main(int argc, char const *argv[]) {
     encodersLArm.resize(nj);
 
 
-    //
-    // while(!encsTorso->getEncoders(encodersTorso.data()))
-    // {
-    //     Time::delay(1);
-    //     printf(".");
-    // }
 
     yarp::os::Publisher<sensor_msgs_JointState> joint_pub;
     if (!joint_pub.topic("/joint_states")) {
@@ -286,22 +280,26 @@ int main(int argc, char const *argv[]) {
 
 
       clock_gettime(CLOCK_REALTIME, &currentTime);
-      // std::cout << currentTime.tv_nsec << std::endl;
+
       joint_states.header.stamp.sec = currentTime.tv_sec;
       joint_states.header.stamp.nsec = currentTime.tv_nsec;
+
 
       joint_states.position[0] = encodersTorso[2] * degtorad;
       joint_states.position[1] = encodersTorso[1] * degtorad;
       joint_states.position[2] = encodersTorso[0] * degtorad;
+
       joint_states.position[3] = encodersHead[0] * degtorad;
       joint_states.position[4] = encodersHead[1] * degtorad;
       joint_states.position[5] = encodersHead[2] * degtorad;
+
       joint_states.position[10] = encodersRArm[0] * degtorad;
       joint_states.position[11] = encodersRArm[1] * degtorad;
       joint_states.position[12] = encodersRArm[2] * degtorad;
       joint_states.position[13] = encodersRArm[3] * degtorad;
       joint_states.position[14] = encodersRArm[4] * degtorad;
       joint_states.position[15] = encodersRArm[5] * degtorad;
+
       joint_states.position[16] = encodersLArm[0] * degtorad;
       joint_states.position[17] = encodersLArm[1] * degtorad;
       joint_states.position[18] = encodersLArm[2] * degtorad;
@@ -311,12 +309,9 @@ int main(int argc, char const *argv[]) {
 
       joint_pub.write(joint_states);
 
-
-
       Time::delay(0.01);
     }
 
-    // joint_pub.close();
 
   return 0;
 }
