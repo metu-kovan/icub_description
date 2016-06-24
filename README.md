@@ -22,7 +22,8 @@ This package consists of a urdf model of iCub humanoid robot and a yarp-ros brid
 ### Run
 1. `roscore`
 2. `yarp server --ros`
-3. `iCub_SIM`
+3. `iCub_SIM` or `gazebo` and add `iCub (fixed)` to gazebo world.
 4. `cd /src/icub_description/yarp_ros_bridge/build`
-5. run `./icub_state_publisher`
+5. run `./icub_state_publisher --robot *name*`   
+   (Note: for iCub_SIM name: `icubSim`, for Gazebo name: `icubGazeboSim`)
 6. `roslaunch icub_description icub.launch`

@@ -21,11 +21,27 @@ int main(int argc, char const *argv[]) {
     Network yarp;
     Node node("/icub_sim/state_publisher");
 
+    Property params;
+    params.fromCommand(argc, argv);
+
+    if (!params.check("robot"))
+    {
+        fprintf(stderr, "Please specify the name of the robot\n");
+        fprintf(stderr, "--robot name (e.g. icub)\n");
+        return 1;
+    }
+    std::string robotName=params.find("robot").asString().c_str();
+    std::string remotePorts="/";
+    remotePorts+=robotName;
+    std::string remoteRArmPorts = remotePorts + "/right_arm";
+    std::string remoteHeadPorts = remotePorts + "/head";
+    std::string remoteTorsoPorts = remotePorts + "/torso";
+    std::string remoteLArmPorts = remotePorts + "/left_arm";
 
     Property options_head;
     options_head.put("device", "remote_controlboard");
     options_head.put("local", "/head/client");   //local port names
-    options_head.put("remote", "/icubSim/head");
+    options_head.put("remote", remoteHeadPorts.c_str());
     // create a device
     PolyDriver headDevice(options_head);
     if (!headDevice.isValid()) {
@@ -37,7 +53,7 @@ int main(int argc, char const *argv[]) {
     Property options_torso;
     options_torso.put("device", "remote_controlboard");
     options_torso.put("local", "/torso/client");   //local port names
-    options_torso.put("remote", "/icubSim/torso");
+    options_torso.put("remote", remoteTorsoPorts.c_str());
     // create a device
     PolyDriver torsoDevice(options_torso);
     if (!torsoDevice.isValid()) {
@@ -49,7 +65,7 @@ int main(int argc, char const *argv[]) {
     Property options_right_arm;
     options_right_arm.put("device", "remote_controlboard");
     options_right_arm.put("local", "/right_arm/client");   //local port names
-    options_right_arm.put("remote", "/icubSim/right_arm");
+    options_right_arm.put("remote", remoteRArmPorts.c_str());
     // create a device
     PolyDriver rArmDevice(options_right_arm);
     if (!rArmDevice.isValid()) {
@@ -62,7 +78,7 @@ int main(int argc, char const *argv[]) {
     Property options_left_arm;
     options_left_arm.put("device", "remote_controlboard");
     options_left_arm.put("local", "/left_arm/client");   //local port names
-    options_left_arm.put("remote", "/icubSim/left_arm");
+    options_left_arm.put("remote", remoteLArmPorts.c_str());
     // create a device
     PolyDriver lArmDevice(options_left_arm);
     if (!lArmDevice.isValid()) {
