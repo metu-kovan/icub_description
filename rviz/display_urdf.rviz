@@ -6,9 +6,8 @@ Panels:
       Expanded:
         - /Global Options1
         - /RobotModel1
-        - /RobotModel1/Status1
-        - /TF1
         - /TF1/Frames1
+        - /MarkerArray1
       Splitter Ratio: 0.5
     Tree Height: 786
   - Class: rviz/Selection
@@ -549,58 +548,6 @@ Visualization Manager:
           Value: false
         indexbase:
           Value: false
-        joint_0:
-          Value: true
-        joint_1:
-          Value: true
-        joint_10:
-          Value: true
-        joint_11:
-          Value: true
-        joint_12:
-          Value: true
-        joint_13:
-          Value: true
-        joint_14:
-          Value: true
-        joint_15:
-          Value: true
-        joint_16:
-          Value: true
-        joint_17:
-          Value: true
-        joint_18:
-          Value: true
-        joint_19:
-          Value: true
-        joint_2:
-          Value: true
-        joint_20:
-          Value: true
-        joint_21:
-          Value: true
-        joint_22:
-          Value: true
-        joint_23:
-          Value: true
-        joint_24:
-          Value: true
-        joint_3:
-          Value: true
-        joint_4:
-          Value: true
-        joint_5:
-          Value: true
-        joint_6:
-          Value: true
-        joint_7:
-          Value: true
-        joint_8:
-          Value: true
-        joint_9:
-          Value: true
-        kinect_sensor:
-          Value: true
         l0:
           Value: false
         l1:
@@ -781,8 +728,8 @@ Visualization Manager:
           Value: true
       Marker Scale: 0.5
       Name: TF
-      Show Arrows: true
-      Show Axes: true
+      Show Arrows: false
+      Show Axes: false
       Show Names: true
       Tree:
         world:
@@ -894,58 +841,15 @@ Visualization Manager:
                       rl5:
                         rl6:
                           {}
-          kinect_sensor:
-            joint_0:
-              {}
-            joint_1:
-              {}
-            joint_10:
-              {}
-            joint_11:
-              {}
-            joint_12:
-              {}
-            joint_13:
-              {}
-            joint_14:
-              {}
-            joint_15:
-              {}
-            joint_16:
-              {}
-            joint_17:
-              {}
-            joint_18:
-              {}
-            joint_19:
-              {}
-            joint_2:
-              {}
-            joint_20:
-              {}
-            joint_21:
-              {}
-            joint_22:
-              {}
-            joint_23:
-              {}
-            joint_24:
-              {}
-            joint_3:
-              {}
-            joint_4:
-              {}
-            joint_5:
-              {}
-            joint_6:
-              {}
-            joint_7:
-              {}
-            joint_8:
-              {}
-            joint_9:
-              {}
       Update Interval: 0
+      Value: true
+    - Class: rviz/MarkerArray
+      Enabled: true
+      Marker Topic: /skeleton_link_markers
+      Name: MarkerArray
+      Namespaces:
+        {}
+      Queue Size: 100
       Value: true
   Enabled: true
   Global Options:
@@ -971,7 +875,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 6.36973858
+      Distance: 5.06418037
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.0599999987
         Stereo Focal Distance: 1
@@ -983,10 +887,10 @@ Visualization Manager:
         Z: 0.327667266
       Name: Current View
       Near Clip Distance: 0.00999999978
-      Pitch: 0.566528082
+      Pitch: 0.481527984
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 5.67396259
+      Yaw: 5.55896282
     Saved: ~
 Window Geometry:
   Displays:
