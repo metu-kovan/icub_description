@@ -8,6 +8,7 @@ Panels:
         - /RobotModel1
         - /TF1/Frames1
         - /MarkerArray1
+        - /Marker1
       Splitter Ratio: 0.5
     Tree Height: 786
   - Class: rviz/Selection
@@ -851,6 +852,14 @@ Visualization Manager:
         {}
       Queue Size: 100
       Value: true
+    - Class: rviz/Marker
+      Enabled: true
+      Marker Topic: /icub/collision_markers
+      Name: Marker
+      Namespaces:
+        collision_marker_1: true
+      Queue Size: 100
+      Value: true
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
@@ -875,7 +884,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 5.06418037
+      Distance: 3.92170119
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.0599999987
         Stereo Focal Distance: 1
@@ -887,10 +896,10 @@ Visualization Manager:
         Z: 0.327667266
       Name: Current View
       Near Clip Distance: 0.00999999978
-      Pitch: 0.481527984
+      Pitch: 0.621527851
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 5.55896282
+      Yaw: 5.86896753
     Saved: ~
 Window Geometry:
   Displays:

@@ -301,14 +301,17 @@ int main(int argc, char const *argv[]) {
       joint_states.header.stamp.nsec = currentTime.tv_nsec;
 
 
+      // update torso positions
       joint_states.position[0] = encodersTorso[2] * degtorad;
       joint_states.position[1] = encodersTorso[1] * degtorad;
       joint_states.position[2] = encodersTorso[0] * degtorad;
 
+      // update head positions
       joint_states.position[3] = encodersHead[0] * degtorad;
       joint_states.position[4] = encodersHead[1] * degtorad;
       joint_states.position[5] = encodersHead[2] * degtorad;
 
+      // update right arm positions
       joint_states.position[10] = encodersRArm[0] * degtorad;
       joint_states.position[11] = encodersRArm[1] * degtorad;
       joint_states.position[12] = encodersRArm[2] * degtorad;
@@ -316,6 +319,7 @@ int main(int argc, char const *argv[]) {
       joint_states.position[14] = encodersRArm[4] * degtorad;
       joint_states.position[15] = encodersRArm[5] * degtorad;
 
+      // update left arm positions
       joint_states.position[16] = encodersLArm[0] * degtorad;
       joint_states.position[17] = encodersLArm[1] * degtorad;
       joint_states.position[18] = encodersLArm[2] * degtorad;
