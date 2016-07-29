@@ -19,7 +19,7 @@ int main(int argc, char** argv)
   while( ros::ok() )
     {
       icub_tf.setRotation(tf::Quaternion(tf::Vector3(1.0, 0.0, 0.0), 0));
-      icub_tf.setOrigin(tf::Vector3(0, 0, 0.60));
+      icub_tf.setOrigin(tf::Vector3(0, 0, 0.95));
       br.sendTransform(tf::StampedTransform(icub_tf, ros::Time::now(), "world", "base_link"));
       // sleeper.sleep();
 
